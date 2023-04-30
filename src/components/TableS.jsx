@@ -1,7 +1,10 @@
 import React from "react";
 import { Table } from "@mantine/core";
+import { useSelector } from "react-redux";
 
 const TableS = () => {
+  const { tableTask } = useSelector((state) => state.taskSlice);
+  console.log(tableTask);
   const ths = (
     <tr>
       <th>No.</th>
@@ -11,8 +14,8 @@ const TableS = () => {
     </tr>
   );
 
-  // const rows = elements.map((element) => (
-  //   <tr key={element.name}>
+  // const rows = tableTask.map((task) => (
+  //   <tr key={task.id}>
   //     <td>{element.position}</td>
   //     <td>{element.name}</td>
   //     <td>{element.symbol}</td>
@@ -29,7 +32,7 @@ const TableS = () => {
     </tr>
   );
   return (
-    <div className=" bg-[#eeef20]   h-[275px]">
+    <div className=" bg-[#abff4f]   h-[275px]">
       <Table>
         <thead>{ths}</thead>
         <tbody>{rows}</tbody>
