@@ -6,11 +6,11 @@ import TableS from '../components/TableS';
 const Body = () => {
   return (
     <div className=" flex ">
-      <div className=" w-[30%]  ">
-        <Form/>
-      </div>
       <div className=" w-[70%] ">
         <TableS/>
+      </div>
+      <div className=" w-[30%]  ">
+        <Form/>
       </div>
     </div>
   );

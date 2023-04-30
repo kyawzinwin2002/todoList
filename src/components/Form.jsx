@@ -9,18 +9,20 @@ const [name,setName] = useState("")
 const [time,setTime] = useState("")
 const dispatch = useDispatch()
 
+
     const addHandler = (e) => {
         e.preventDefault()
         const data = {id:Date.now(),name,time}
         // console.log(data);
         dispatch(ADD_TO_TABLE(data))
         
+        
     }
 
   return (
     <div className="bg-[#ffd23f]   h-[275px]">
       <form onSubmit={addHandler} className=" px-3 flex flex-col justify-evenly h-[100%]">
-        <h1 className=" text-3xl mx-auto font-bold text-[#986841]">Plan</h1>
+        <h1 className=" text-2xl mx-auto font-bold text-[#986841]">Plan</h1>
         <TextInput value={name} onChange={e => {setName(e.target.value)}}
           placeholder="Enter Task Name"
           label="Task Name"
