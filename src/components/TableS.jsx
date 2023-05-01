@@ -1,32 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { BsTrash } from "react-icons/bs";
-import { REMOVE_FROM_TABLE } from "../services/taskSlice";
+import { ADD_TO_DONELIST, REMOVE_FROM_DONELIST, REMOVE_FROM_TABLE } from "../services/taskSlice";
 import { useDispatch } from "react-redux";
 
+import Swal from "sweetalert2";
+
 const TableS = () => {
-  const { tableTask } = useSelector((state) => state.taskSlice);
+  const { tableTask, doneList } = useSelector((state) => state.taskSlice);
   const dispatch = useDispatch();
-  const timeOne = Date.now();
-  const timeTwo = Date.now();
-  const timeThree = Date.now();
+  console.log(doneList);
 
-  console.log(tableTask);
-
-  const ths = (
-    <tr>
-      <th>Task Name</th>
-      <th>Time</th>
-      <th>Done</th>
-    </tr>
-  );
-
+  
   return (
     <div className=" flex flex-col gap-3 bg-[#abff4f]   h-[275px] p-5">
       <h1 className=" text-2xl mx-auto font-bold text-[#986841]">Plan List</h1>
+
       <Table>
-        <thead>{ths}</thead>
+        <thead>
+          <tr>
+            <th>Task Name</th>
+            <th>Time</th>
+            <th>{doneList.length}/{tableTask.length}</th>
+          </tr>
+        </thead>
         <tbody>
           {tableTask.map((item) => {
             return (
@@ -34,7 +32,58 @@ const TableS = () => {
                 <td>{item.name}</td>
                 <td>{item.time}</td>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        dispatch(ADD_TO_DONELIST(item));
+                        const Toast = Swal.mixin({
+                          toast: true,
+                          position: "top-end",
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: (toast) => {
+                            toast.addEventListener(
+                              "mouseenter",
+                              Swal.stopTimer
+                            );
+                            toast.addEventListener(
+                              "mouseleave",
+                              Swal.resumeTimer
+                            );
+                          },
+                        });
+                        Toast.fire({
+                          icon: "success",
+                          title: "Congratulations,You have done a great job!",
+                        });
+                      }else{
+                        dispatch(REMOVE_FROM_DONELIST(item))
+                        const Toast = Swal.mixin({
+                          toast: true,
+                          position: "top-end",
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: (toast) => {
+                            toast.addEventListener(
+                              "mouseenter",
+                              Swal.stopTimer
+                            );
+                            toast.addEventListener(
+                              "mouseleave",
+                              Swal.resumeTimer
+                            );
+                          },
+                        });
+                        Toast.fire({
+                          icon: "warning",
+                          title: "Why Honey? TT",
+                        });
+                      }
+                    }}
+                    type="checkbox"
+                  />
                 </td>
                 <td>
                   <button
