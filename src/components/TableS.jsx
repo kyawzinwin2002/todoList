@@ -12,96 +12,106 @@ const TableS = () => {
   const dispatch = useDispatch();
   console.log(doneList);
 
+  if(tableTask.length){
+    return (
+      <div className=" flex flex-col gap-3 bg-[#abff4f]   h-[275px] p-5">
+        <h1 className=" text-2xl mx-auto font-bold text-[#986841]">Plan List</h1>
   
-  return (
-    <div className=" flex flex-col gap-3 bg-[#abff4f]   h-[275px] p-5">
-      <h1 className=" text-2xl mx-auto font-bold text-[#986841]">Plan List</h1>
+        <Table>
+          <thead>
+            <tr>
+              <th>Task Name</th>
+              <th>Time</th>
+              <th>{doneList.length}/{tableTask.length}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableTask.map((item) => {
+              return (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.time}</td>
+                  <td>
+                    <input
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          dispatch(ADD_TO_DONELIST(item));
+                          const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                              toast.addEventListener(
+                                "mouseenter",
+                                Swal.stopTimer
+                              );
+                              toast.addEventListener(
+                                "mouseleave",
+                                Swal.resumeTimer
+                              );
+                            },
+                          });
+                          Toast.fire({
+                            icon: "success",
+                            title: "Congratulations,You have done a great job!",
+                          });
+                        }else{
+                          dispatch(REMOVE_FROM_DONELIST(item))
+                          const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                              toast.addEventListener(
+                                "mouseenter",
+                                Swal.stopTimer
+                              );
+                              toast.addEventListener(
+                                "mouseleave",
+                                Swal.resumeTimer
+                              );
+                            },
+                          });
+                          Toast.fire({
+                            icon: "warning",
+                            title: "Why Honey? TT",
+                          });
+                        }
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        dispatch(REMOVE_FROM_TABLE(item));
+                      }}
+                      className=" w-6 h-6 flex align-middle justify-center items-center bg-red-600 text-white  rounded-sm "
+                    >
+                      <BsTrash />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
 
-      <Table>
-        <thead>
-          <tr>
-            <th>Task Name</th>
-            <th>Time</th>
-            <th>{doneList.length}/{tableTask.length}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableTask.map((item) => {
-            return (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.time}</td>
-                <td>
-                  <input
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        dispatch(ADD_TO_DONELIST(item));
-                        const Toast = Swal.mixin({
-                          toast: true,
-                          position: "top-end",
-                          showConfirmButton: false,
-                          timer: 3000,
-                          timerProgressBar: true,
-                          didOpen: (toast) => {
-                            toast.addEventListener(
-                              "mouseenter",
-                              Swal.stopTimer
-                            );
-                            toast.addEventListener(
-                              "mouseleave",
-                              Swal.resumeTimer
-                            );
-                          },
-                        });
-                        Toast.fire({
-                          icon: "success",
-                          title: "Congratulations,You have done a great job!",
-                        });
-                      }else{
-                        dispatch(REMOVE_FROM_DONELIST(item))
-                        const Toast = Swal.mixin({
-                          toast: true,
-                          position: "top-end",
-                          showConfirmButton: false,
-                          timer: 3000,
-                          timerProgressBar: true,
-                          didOpen: (toast) => {
-                            toast.addEventListener(
-                              "mouseenter",
-                              Swal.stopTimer
-                            );
-                            toast.addEventListener(
-                              "mouseleave",
-                              Swal.resumeTimer
-                            );
-                          },
-                        });
-                        Toast.fire({
-                          icon: "warning",
-                          title: "Why Honey? TT",
-                        });
-                      }
-                    }}
-                    type="checkbox"
-                  />
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      dispatch(REMOVE_FROM_TABLE(item));
-                    }}
-                    className=" w-6 h-6 flex align-middle justify-center items-center bg-red-600 text-white  rounded-sm "
-                  >
-                    <BsTrash />
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+  return(
+    <div className="flex flex-col gap-3 bg-[#abff4f]   h-[275px] p-5">
+        <h1 className=" text-2xl mx-auto font-bold text-[#986841]">Plan List</h1>
+        <h1 className=" text-3xl mx-auto font-bold text-[#986841]">Do Something Honey</h1>
     </div>
-  );
+  )
+  
+  
 };
 
 export default TableS;
