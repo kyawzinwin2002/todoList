@@ -7,10 +7,13 @@ import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
 
+import { Link } from "react-router-dom";
+import EditBtn from "./EditBtn";
+
 const TableS = () => {
   const { tableTask, doneList } = useSelector((state) => state.taskSlice);
   const dispatch = useDispatch();
-  console.log(doneList);
+  // console.log(doneList);
 
   if(tableTask.length){
     return (
@@ -86,6 +89,8 @@ const TableS = () => {
                     />
                   </td>
                   <td>
+                    <div className=" flex gap-2">
+                    <EditBtn id={item.id}/>
                     <button
                       onClick={() => {
                         dispatch(REMOVE_FROM_TABLE(item));
@@ -94,6 +99,7 @@ const TableS = () => {
                     >
                       <BsTrash />
                     </button>
+                    </div>
                   </td>
                 </tr>
               );

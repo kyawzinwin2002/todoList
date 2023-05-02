@@ -28,6 +28,18 @@ export const taskSlice = createSlice({
     REMOVE_FROM_DONELIST: (state, { payload }) => {
       state.doneList = state.doneList.filter((item) => item.id !== payload.id);
     },
+    EDIT_IN_TABLE:(state,{payload}) => {
+      state.tableTask.map(item => {
+        if(item.id == payload.id){
+          
+          
+          item.name = payload.name
+          item.time = payload.time
+          
+         
+        }
+      })
+    }
   },
 });
 
@@ -36,5 +48,6 @@ export const {
   REMOVE_FROM_TABLE,
   ADD_TO_DONELIST,
   REMOVE_FROM_DONELIST,
+  EDIT_IN_TABLE
 } = taskSlice.actions;
 export default taskSlice.reducer;
